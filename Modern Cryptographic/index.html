@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Message Encryption Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e1e2f, #2a2a4a);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin: 1rem;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .tab {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab button {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.1rem;
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab button.active {
+            background: #00d4ff;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .tab button:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        textarea, input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-size: 1rem;
+            resize: none;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus, input[type="password"]:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            background: #00d4ff;
+            border: none;
+            border-radius: 10px;
+            color: #1e1e2f;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #00b7e6;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .copy-btn {
+            margin-top: 0.5rem;
+            background: #4caf50;
+        }
+
+        .copy-btn:hover {
+            background: #45a049;
+        }
+
+        .message {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+                margin: 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .tab button {
+                font-size: 0.9rem;
+                padding: 0.4rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Secure Message Encryption Tool</h1>
+        <div class="tab">
+            <button class="tab-btn active" onclick="showTab('encrypt')">Encrypt</button>
+            <button class="tab-btn" onclick="showTab('decrypt')">Decrypt</button>
+        </div>
+        <div id="encrypt" class="tab-content">
+            <div class="form-group">
+                <label for="encrypt-message">Message to Encrypt</label>
+                <textarea id="encrypt-message" rows="5" placeholder="Enter your message..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="encrypt-passphrase">Passphrase</label>
+                <input type="password" id="encrypt-passphrase" placeholder="Enter a strong passphrase...">
+            </div>
+            <button onclick="encryptMessage()">Encrypt Message</button>
+            <div class="form-group" id="encrypted-result" style="display: none;">
+                <label>Encrypted Message</label>
+                <textarea id="encrypted-message" rows="5" readonly></textarea>
+                <button class="copy-btn" onclick="copyToClipboard('encrypted-message')">Copy to Clipboard</button>
+            </div>
+            <div id="encrypt-message-output" class="message"></div>
+        </div>
+        <div id="decrypt" class="tab-content" style="display: none;">
+            <div class="form-group">
+                <label for="decrypt-message">Encrypted Message</label>
+                <textarea id="decrypt-message" rows="5" placeholder="Enter encrypted message..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="decrypt-passphrase">Passphrase</label>
+                <input type="password" id="decrypt-passphrase" placeholder="Enter the passphrase...">
+            </div>
+            <button onclick="decryptMessage()">Decrypt Message</button>
+            <div class="form-group" id="decrypted-result" style="display: none;">
+                <label>Decrypted Message</label>
+                <textarea id="decrypted-message" rows="5" readonly></textarea>
+                <button class="copy-btn" onclick="copyToClipboard('decrypted-message')">Copy to Clipboard</button>
+            </div>
+            <div id="decrypt-message-output" class="message"></div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function showTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tab).style.display = 'block';
+            document.querySelector(`.tab-btn[onclick="showTab('${tab}')"]`).classList.add('active');
+        }
+
+        // Convert string to ArrayBuffer
+        function stringToArrayBuffer(str) {
+            return new TextEncoder().encode(str);
+        }
+
+        // Convert ArrayBuffer to string
+        function arrayBufferToString(buffer) {
+            return new TextDecoder().decode(buffer);
+        }
+
+        // Convert ArrayBuffer to Base64
+        function arrayBufferToBase64(buffer) {
+            const bytes = new Uint8Array(buffer);
+            let binary = '';
+            for (let i = 0; i < bytes.length; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return btoa(binary);
+        }
+
+        // Convert Base64 to ArrayBuffer
+        function base64ToArrayBuffer(base64) {
+            const binary = atob(base64);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) {
+                bytes[i] = binary.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        // Derive key from passphrase using PBKDF2
+        async function deriveKey(passphrase, salt) {
+            const keyMaterial = await crypto.subtle.importKey(
+                'raw',
+                stringToArrayBuffer(passphrase),
+                'PBKDF2',
+                false,
+                ['deriveBits', 'deriveKey']
+            );
+            return crypto.subtle.deriveKey(
+                {
+                    name: 'PBKDF2',
+                    salt: salt,
+                    iterations: 100000,
+                    hash: 'SHA-256'
+                },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                true,
+                ['encrypt', 'decrypt']
+            );
+        }
+
+        // Encrypt message
+        async function encryptMessage() {
+            const message = document.getElementById('encrypt-message').value;
+            const passphrase = document.getElementById('encrypt-passphrase').value;
+            const output = document.getElementById('encrypt-message-output');
+
+            if (!message || !passphrase) {
+                output.className = 'message error';
+                output.textContent = 'Please enter both a message and a passphrase.';
+                return;
+            }
+
+            try {
+                const iv = crypto.getRandomValues(new Uint8Array(12));
+                const salt = crypto.getRandomValues(new Uint8Array(16));
+                const key = await deriveKey(passphrase, salt);
+                const encrypted = await crypto.subtle.encrypt(
+                    { name: 'AES-GCM', iv: iv },
+                    key,
+                    stringToArrayBuffer(message)
+                );
+
+                const encryptedBase64 = arrayBufferToBase64(encrypted);
+                const ivBase64 = arrayBufferToBase64(iv);
+                const saltBase64 = arrayBufferToBase64(salt);
+                const result = `${ivBase64}:${saltBase64}:${encryptedBase64}`;
+
+                document.getElementById('encrypted-message').value = result;
+                document.getElementById('encrypted-result').style.display = 'block';
+                output.className = 'message success';
+                output.textContent = 'Message encrypted successfully!';
+            } catch (error) {
+                output.className = 'message error';
+                output.textContent = 'Encryption failed. Please try again.';
+            }
+        }
+
+        // Decrypt message
+        async function decryptMessage() {
+            const encryptedMessage = document.getElementById('decrypt-message').value;
+            const passphrase = document.getElementById('decrypt-passphrase').value;
+            const output = document.getElementById('decrypt-message-output');
+
+            if (!encryptedMessage || !passphrase) {
+                output.className = 'message error';
+                output.textContent = 'Please enter both an encrypted message and a passphrase.';
+                return;
+            }
+
+            try {
+                const [ivBase64, saltBase64, encryptedBase64] = encryptedMessage.split(':');
+                if (!ivBase64 || !saltBase64 || !encryptedBase64) {
+                    throw new Error('Invalid encrypted message format.');
+                }
+
+                const iv = base64ToArrayBuffer(ivBase64);
+                const salt = base64ToArrayBuffer(saltBase64);
+                const encrypted = base64ToArrayBuffer(encryptedBase64);
+                const key = await deriveKey(passphrase, salt);
+                const decrypted = await crypto.subtle.decrypt(
+                    { name: 'AES-GCM', iv: iv },
+                    key,
+                    encrypted
+                );
+
+                const decryptedMessage = arrayBufferToString(decrypted);
+                document.getElementById('decrypted-message').value = decryptedMessage;
+                document.getElementById('decrypted-result').style.display = 'block';
+                output.className = 'message success';
+                output.textContent = 'Message decrypted successfully!';
+            } catch (error) {
+                output.className = 'message error';
+                output.textContent = 'Decryption failed. Ensure the passphrase and message are correct.';
+            }
+        }
+
+        // Copy to clipboard
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).value;
+            navigator.clipboard.writeText(text).then(() => {
+                const output = document.getElementById(elementId === 'encrypted-message' ? 'encrypt-message-output' : 'decrypt-message-output');
+                output.className = 'message success';
+                output.textContent = 'Copied to clipboard!';
+            }).catch(() => {
+                const output = document.getElementById(elementId === 'encrypted-message' ? 'encrypt-message-output' : 'decrypt-message-output');
+                output.className = 'message error';
+                output.textContent = 'Failed to copy to clipboard.';
+            });
+        }
+    </script>
+</body>
+  </html>

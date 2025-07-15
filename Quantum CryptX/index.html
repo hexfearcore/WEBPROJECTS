@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quantum CryptX</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <div class="container">
+    <h1>🔐 Quantum CryptX</h1>
+    <textarea id="inputMessage" placeholder="Enter your secret message..."></textarea>
+
+    <div class="buttons">
+      <button onclick="encryptMessage()">Encrypt 🔒</button>
+      <button onclick="decryptMessage()">Decrypt 🔓</button>
+      <button onclick="copyToClipboard()">Copy 📋</button>
+    </div>
+
+    <textarea id="outputMessage" placeholder="Encrypted/Decrypted message will appear here..." readonly></textarea>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="matrix.js"></script>
+</body>
+</html>

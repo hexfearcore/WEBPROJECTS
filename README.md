@@ -36,7 +36,7 @@ You can simply open `index.html` in a browser or push the project to a GitHub re
 
 ## 🤖 Author & Vision
 
-Created with [Maisam Abbas](https://github.com/hexfearcore)
+Created with [HEXFEARCORE](https://github.com/hexfearcore)
 
 > “Code that looks good, feels fast, and works everywhere — that’s the future.”
 

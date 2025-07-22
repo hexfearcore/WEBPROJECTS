@@ -1,3 +1,4 @@
+![WEB Screenshot](images/webprojects.jpg)
 ### 🌐 WEBPROJECTS – Next-Gen Responsive Web Applications
 
 Welcome to **WEBPROJECTS**, a powerful collection of modern, fully responsive, cross-platform web apps built with cutting-edge front-end technologies.

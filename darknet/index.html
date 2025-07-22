@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DARKNET // C.W.I.S.</title>
+    
+    <!-- Google Fonts: Exo 2 for headers, Poppins for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel ="stylesheet" href ="style.css">
+</head>
+<body>
+    
+    <!-- =================================================================
+    == HTML CONTENT ==
+    ================================================================== -->
+
+    <canvas id="matrix-canvas"></canvas>
+
+    <div class="container">
+        <header>
+            <h1 class="neon-title">DARKNET</h1>
+            <p class="tagline">Cybernetic Warfare & Intelligence Suite</p>
+        </header>
+
+        <main>
+            <div class="terminal-container">
+                <div class="terminal-header">SYSTEM LOG</div>
+                <div id="terminal-output"></div>
+            </div>
+
+            <h2>CORE UTILITIES</h2>
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <h3>Ghost Protocol</h3>
+                    <p>Network cloaking and signal anonymizer. Evade digital detection.</p>
+                    <button data-tool="Ghost Protocol">Initiate</button>
+                </div>
+                <div class="tool-card">
+                    <h3>Cryptex Decryptor</h3>
+                    <p>Brute-force quantum encryption keys using heuristic algorithms.</p>
+                    <button data-tool="Cryptex Decryptor">Execute</button>
+                </div>
+                <div class="tool-card">
+                    <h3>Neural-Link</h3>
+                    <p>Interface directly with compromised systems via neural feedback.</p>
+                    <button data-tool="Neural-Link">Connect</button>
+                </div>
+                <div class="tool-card">
+                    <h3>Data Scrambler</h3>
+                    <p>Corrupt target data logs, leaving behind untraceable artifacts.</p>
+                    <button data-tool="Data Scrambler">Deploy</button>
+                </div>
+                <div class="tool-card">
+                    <h3>Spectre Drone</h3>
+                    <p>Deploy virtual drones for wide-spectrum reconnaissance.</p>
+                    <button data-tool="Spectre Drone">Launch</button>
+                </div>
+                <div class="tool-card">
+                    <h3>Overlord Rootkit</h3>
+                    <p>Gain highest-level administrative access on any known OS.</p>
+                    <button data-tool="Overlord Rootkit">Install</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>STATUS: <span id="system-status">[ALL SYSTEMS NOMINAL]</span></p>
+            <p>&copy; 2024 Anomaly Collective. Discretion is advised.</p>
+        </footer>
+    </div>
+     <script src= "script.js"></script>
+ 
+</body>
+</html>

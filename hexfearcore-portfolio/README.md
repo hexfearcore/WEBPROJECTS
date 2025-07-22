@@ -28,5 +28,7 @@ A beautiful, interactive portfolio website for GitHub profile (hexfearcore) buil
 1. Clone the repository:
    ```bash
    git clone https://github.com/hexfearcore/WEBPROJECTS.git
+   cd WEBPROJECTS
    cd hexfearcore-portfolio
+   
    
